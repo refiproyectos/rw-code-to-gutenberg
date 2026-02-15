@@ -1,0 +1,104 @@
+.wp-block-refineria-rw-palma-beauty-palma-home-hero.rw-palma-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 40px 24px;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  border-radius: clamp(1rem, 2.5vw, 1.8rem);
+  overflow: hidden;
+  background-color: #20182f;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Manrope", sans-serif;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.4rem;
+  padding: 0.38rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__title {
+  line-height: 1.06;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__description {
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Manrope", sans-serif;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 210px;
+  padding: 0.95rem 1.8rem;
+  border-radius: 0.9rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.08rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__button:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__button--secondary {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 782px) {
+  .wp-block-refineria-rw-palma-beauty-palma-home-hero.rw-palma-hero {
+    width: calc(100% - 1.5rem);
+    padding: 2rem 1.2rem;
+  }
+
+  .wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__content {
+    max-width: 640px;
+  }
+
+  .wp-block-refineria-rw-palma-beauty-palma-home-hero .rw-palma-hero__button {
+    width: 100%;
+    min-width: 0;
+  }
+}
