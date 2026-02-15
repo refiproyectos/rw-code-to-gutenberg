@@ -79,26 +79,26 @@
     return el(
       Fragment,
       null,
-      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Margin', domain)),
-      field(__('Top', domain), 'MarginTop'),
-      field(__('Right', domain), 'MarginRight'),
-      field(__('Bottom', domain), 'MarginBottom'),
-      field(__('Left', domain), 'MarginLeft'),
+      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Margen', domain)),
+      field(__('Superior', domain), 'MarginTop'),
+      field(__('Derecha', domain), 'MarginRight'),
+      field(__('Inferior', domain), 'MarginBottom'),
+      field(__('Izquierda', domain), 'MarginLeft'),
       el(SelectControl, {
-        label: __('Margin unit', domain),
+        label: __('Unidad de margen', domain),
         value: attrs[prefix + 'MarginUnit'],
         options: SPACING_UNITS,
         onChange: function (value) {
           updateAttr(setAttributes, prefix + 'MarginUnit', value || 'px');
         }
       }),
-      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Padding', domain)),
-      field(__('Top', domain), 'PaddingTop'),
-      field(__('Right', domain), 'PaddingRight'),
-      field(__('Bottom', domain), 'PaddingBottom'),
-      field(__('Left', domain), 'PaddingLeft'),
+      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Relleno', domain)),
+      field(__('Superior', domain), 'PaddingTop'),
+      field(__('Derecha', domain), 'PaddingRight'),
+      field(__('Inferior', domain), 'PaddingBottom'),
+      field(__('Izquierda', domain), 'PaddingLeft'),
       el(SelectControl, {
-        label: __('Padding unit', domain),
+        label: __('Unidad de relleno', domain),
         value: attrs[prefix + 'PaddingUnit'],
         options: SPACING_UNITS,
         onChange: function (value) {
@@ -203,9 +203,9 @@
           null,
           el(
             PanelBody,
-            { title: __('Section settings', domain), initialOpen: true },
+            { title: __('Ajustes de sección', domain), initialOpen: true },
             el(RangeControl, {
-              label: __('Section min height (px)', domain),
+              label: __('Altura mínima de sección (px)', domain),
               min: 420,
               max: 1000,
               value: attrs.sectionMinHeight,
@@ -214,7 +214,7 @@
               }
             }),
             el(RangeControl, {
-              label: __('Overlay opacity', domain),
+              label: __('Opacidad de superposición', domain),
               min: 0.1,
               max: 0.9,
               step: 0.05,
@@ -224,7 +224,7 @@
               }
             }),
             el(RangeControl, {
-              label: __('Content max width (px)', domain),
+              label: __('Ancho máximo del contenido (px)', domain),
               min: 520,
               max: 1280,
               value: attrs.sectionContentMaxWidth,
@@ -233,19 +233,19 @@
               }
             }),
             el(SelectControl, {
-              label: __('Text align', domain),
+              label: __('Alineación de texto', domain),
               value: attrs.sectionTextAlign,
               options: [
-                { label: __('Center', domain), value: 'center' },
-                { label: __('Left', domain), value: 'left' },
-                { label: __('Right', domain), value: 'right' }
+                { label: __('Centrado', domain), value: 'center' },
+                { label: __('Izquierda', domain), value: 'left' },
+                { label: __('Derecha', domain), value: 'right' }
               ],
               onChange: function (value) {
                 setAttributes({ sectionTextAlign: value || 'center' });
               }
             }),
             el(SelectControl, {
-              label: __('Section font family', domain),
+              label: __('Fuente de la sección', domain),
               value: attrs.sectionFontFamily,
               options: FONT_OPTIONS,
               onChange: function (value) {
@@ -254,9 +254,9 @@
             }),
             spacingControls(attrs, setAttributes, 'section', domain),
             el(TextControl, {
-              label: __('Section border radius', domain),
+              label: __('Radio de borde de sección', domain),
               value: attrs.sectionBorderRadius,
-              help: __('Example: 1.8rem', domain),
+              help: __('Ejemplo: 1.8rem', domain),
               onChange: function (value) {
                 setAttributes({ sectionBorderRadius: value });
               }
@@ -272,8 +272,8 @@
                     Button,
                     { onClick: obj.open, variant: 'secondary' },
                     attrs.backgroundImageUrl
-                      ? __('Replace background image', domain)
-                      : __('Select background image', domain)
+                      ? __('Reemplazar imagen de fondo', domain)
+                      : __('Seleccionar imagen de fondo', domain)
                   );
                 }
               })
@@ -282,9 +282,9 @@
 
           el(
             PanelBody,
-            { title: __('Eyebrow settings', domain), initialOpen: false },
+            { title: __('Ajustes de etiqueta superior', domain), initialOpen: false },
             el(RangeControl, {
-              label: __('Eyebrow font size (px)', domain),
+              label: __('Tamaño de etiqueta superior (px)', domain),
               min: 10,
               max: 24,
               value: attrs.eyebrowFontSize,
@@ -292,7 +292,7 @@
                 setAttributes({ eyebrowFontSize: value || 12 });
               }
             }),
-            el(BaseControl, { label: __('Eyebrow text color', domain) },
+            el(BaseControl, { label: __('Color de texto de etiqueta superior', domain) },
               el(ColorPalette, {
                 value: attrs.eyebrowColor,
                 onChange: function (value) {
@@ -301,7 +301,7 @@
               })
             ),
             el(TextControl, {
-              label: __('Eyebrow background color', domain),
+              label: __('Color de fondo de etiqueta superior', domain),
               value: attrs.eyebrowBackgroundColor,
               onChange: function (value) {
                 setAttributes({ eyebrowBackgroundColor: value || 'rgba(255,255,255,0.1)' });
@@ -312,9 +312,9 @@
 
           el(
             PanelBody,
-            { title: __('Title settings', domain), initialOpen: false },
+            { title: __('Ajustes de título', domain), initialOpen: false },
             el(RangeControl, {
-              label: __('Title font size (px)', domain),
+              label: __('Tamaño de título (px)', domain),
               min: 34,
               max: 96,
               value: attrs.titleFontSize,
@@ -323,7 +323,7 @@
               }
             }),
             el(RangeControl, {
-              label: __('Title max width (px)', domain),
+              label: __('Ancho máximo del título (px)', domain),
               min: 420,
               max: 1280,
               value: attrs.titleMaxWidth,
@@ -332,14 +332,14 @@
               }
             }),
             el(SelectControl, {
-              label: __('Title font family', domain),
+              label: __('Fuente del título', domain),
               value: attrs.titleFontFamily,
               options: FONT_OPTIONS,
               onChange: function (value) {
                 setAttributes({ titleFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(BaseControl, { label: __('Title color', domain) },
+            el(BaseControl, { label: __('Color del título', domain) },
               el(ColorPalette, {
                 value: attrs.titleColor,
                 onChange: function (value) {
@@ -352,9 +352,9 @@
 
           el(
             PanelBody,
-            { title: __('Description settings', domain), initialOpen: false },
+            { title: __('Ajustes de descripción', domain), initialOpen: false },
             el(RangeControl, {
-              label: __('Description font size (px)', domain),
+              label: __('Tamaño de descripción (px)', domain),
               min: 14,
               max: 36,
               value: attrs.descriptionFontSize,
@@ -363,7 +363,7 @@
               }
             }),
             el(SelectControl, {
-              label: __('Description font family', domain),
+              label: __('Fuente de la descripción', domain),
               value: attrs.descriptionFontFamily,
               options: FONT_OPTIONS,
               onChange: function (value) {
@@ -371,7 +371,7 @@
               }
             }),
             el(TextControl, {
-              label: __('Description color', domain),
+              label: __('Color de la descripción', domain),
               value: attrs.descriptionColor,
               onChange: function (value) {
                 setAttributes({ descriptionColor: value || 'rgba(255,255,255,0.92)' });
@@ -382,9 +382,9 @@
 
           el(
             PanelBody,
-            { title: __('Buttons wrapper settings', domain), initialOpen: false },
+            { title: __('Ajustes del contenedor de botones', domain), initialOpen: false },
             el(TextControl, {
-              label: __('Buttons wrapper margin-top', domain),
+              label: __('Margen superior del contenedor de botones', domain),
               value: attrs.actionsMarginTop,
               onChange: function (value) {
                 setAttributes({ actionsMarginTop: value || '2.25rem' });
@@ -394,9 +394,9 @@
 
           el(
             PanelBody,
-            { title: __('Primary button', domain), initialOpen: false },
+            { title: __('Botón primario', domain), initialOpen: false },
             el(TextControl, {
-              label: __('Text', domain),
+              label: __('Texto', domain),
               value: attrs.primaryButtonText,
               onChange: function (value) {
                 setAttributes({ primaryButtonText: value });
@@ -409,14 +409,14 @@
               }
             }),
             el(ToggleControl, {
-              label: __('Open in new tab', domain),
+              label: __('Abrir en nueva pestaña', domain),
               checked: !!attrs.primaryButtonNewTab,
               onChange: function (value) {
                 setAttributes({ primaryButtonNewTab: !!value });
               }
             }),
             el(RangeControl, {
-              label: __('Primary button font size (px)', domain),
+              label: __('Botón primario font size (px)', domain),
               min: 12,
               max: 28,
               value: attrs.primaryFontSize,
@@ -425,14 +425,14 @@
               }
             }),
             el(SelectControl, {
-              label: __('Primary button font family', domain),
+              label: __('Botón primario font family', domain),
               value: attrs.primaryFontFamily,
               options: FONT_OPTIONS,
               onChange: function (value) {
                 setAttributes({ primaryFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(BaseControl, { label: __('Background color', domain) },
+            el(BaseControl, { label: __('Color de fondo', domain) },
               el(ColorPalette, {
                 value: attrs.primaryBgColor,
                 onChange: function (value) {
@@ -440,7 +440,7 @@
                 }
               })
             ),
-            el(BaseControl, { label: __('Text color', domain) },
+            el(BaseControl, { label: __('Color de texto', domain) },
               el(ColorPalette, {
                 value: attrs.primaryTextColor,
                 onChange: function (value) {
@@ -449,7 +449,7 @@
               })
             ),
             el(TextControl, {
-              label: __('Primary border color', domain),
+              label: __('Color de borde primario', domain),
               value: attrs.primaryBorderColor,
               onChange: function (value) {
                 setAttributes({ primaryBorderColor: value || 'transparent' });
@@ -460,9 +460,9 @@
 
           el(
             PanelBody,
-            { title: __('Secondary button', domain), initialOpen: false },
+            { title: __('Botón secundario', domain), initialOpen: false },
             el(TextControl, {
-              label: __('Text', domain),
+              label: __('Texto', domain),
               value: attrs.secondaryButtonText,
               onChange: function (value) {
                 setAttributes({ secondaryButtonText: value });
@@ -475,14 +475,14 @@
               }
             }),
             el(ToggleControl, {
-              label: __('Open in new tab', domain),
+              label: __('Abrir en nueva pestaña', domain),
               checked: !!attrs.secondaryButtonNewTab,
               onChange: function (value) {
                 setAttributes({ secondaryButtonNewTab: !!value });
               }
             }),
             el(RangeControl, {
-              label: __('Secondary button font size (px)', domain),
+              label: __('Botón secundario font size (px)', domain),
               min: 12,
               max: 28,
               value: attrs.secondaryFontSize,
@@ -491,7 +491,7 @@
               }
             }),
             el(SelectControl, {
-              label: __('Secondary button font family', domain),
+              label: __('Botón secundario font family', domain),
               value: attrs.secondaryFontFamily,
               options: FONT_OPTIONS,
               onChange: function (value) {
@@ -499,13 +499,13 @@
               }
             }),
             el(TextControl, {
-              label: __('Border color', domain),
+              label: __('Color de borde', domain),
               value: attrs.secondaryBorderColor,
               onChange: function (value) {
                 setAttributes({ secondaryBorderColor: value || 'rgba(255,255,255,0.35)' });
               }
             }),
-            el(BaseControl, { label: __('Text color', domain) },
+            el(BaseControl, { label: __('Color de texto', domain) },
               el(ColorPalette, {
                 value: attrs.secondaryTextColor,
                 onChange: function (value) {
@@ -514,7 +514,7 @@
               })
             ),
             el(TextControl, {
-              label: __('Secondary background color', domain),
+              label: __('Color de fondo secundario', domain),
               value: attrs.secondaryBgColor,
               onChange: function (value) {
                 setAttributes({ secondaryBgColor: value || 'rgba(255,255,255,0.1)' });
@@ -536,7 +536,7 @@
               onChange: function (value) {
                 setAttributes({ eyebrow: value });
               },
-              placeholder: __('Eyebrow text', domain)
+              placeholder: __('Texto de etiqueta superior', domain)
             }),
             el(RichText, {
               tagName: 'h2',
@@ -546,7 +546,7 @@
               onChange: function (value) {
                 setAttributes({ heading: value });
               },
-              placeholder: __('Hero title', domain)
+              placeholder: __('Título del hero', domain)
             }),
             el(RichText, {
               tagName: 'p',
@@ -556,7 +556,7 @@
               onChange: function (value) {
                 setAttributes({ description: value });
               },
-              placeholder: __('Hero description', domain)
+              placeholder: __('Descripción del hero', domain)
             }),
             el('div', { className: 'rw-palma-hero__actions', style: { marginTop: maybeStyle(attrs.actionsMarginTop) } },
               el('a', Object.assign({
