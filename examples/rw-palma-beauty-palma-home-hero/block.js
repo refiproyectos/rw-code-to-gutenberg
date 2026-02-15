@@ -64,7 +64,7 @@
   }
 
   function spacingControls(attrs, setAttributes, prefix, domain) {
-    function field(label, symbol, side) {
+    function field(label, side) {
       var key = prefix + side;
       return el(
         'div',
@@ -72,7 +72,7 @@
         el(TextControl, {
           label: label,
           hideLabelFromVision: true,
-          placeholder: symbol,
+          placeholder: '',
           value: attrs[key],
           type: 'number',
           onChange: function (value) {
@@ -82,7 +82,7 @@
       );
     }
 
-    function row(symbol, type) {
+    function row(title, type) {
       var unitKey = prefix + type + 'Unit';
       var sidePrefix = type;
       return el(
@@ -90,17 +90,17 @@
         {
           style: {
             display: 'grid',
-            gridTemplateColumns: '24px repeat(4, minmax(0, 1fr)) 86px',
+            gridTemplateColumns: '72px repeat(4, minmax(0, 1fr)) 86px',
             gap: '8px',
             alignItems: 'center',
             marginBottom: '8px'
           }
         },
-        el('div', { style: { fontWeight: 700, textAlign: 'center', opacity: 0.75 } }, symbol),
-        field(__('Superior', domain), '↑', sidePrefix + 'Top'),
-        field(__('Derecha', domain), '→', sidePrefix + 'Right'),
-        field(__('Inferior', domain), '↓', sidePrefix + 'Bottom'),
-        field(__('Izquierda', domain), '←', sidePrefix + 'Left'),
+        el('div', { style: { fontWeight: 600, opacity: 0.9 } }, title),
+        field(__('Superior', domain), sidePrefix + 'Top'),
+        field(__('Derecha', domain), sidePrefix + 'Right'),
+        field(__('Inferior', domain), sidePrefix + 'Bottom'),
+        field(__('Izquierda', domain), sidePrefix + 'Left'),
         el(
           'div',
           { style: { minWidth: 0 } },
@@ -120,8 +120,8 @@
     return el(
       Fragment,
       null,
-      row('M', 'Margin'),
-      row('P', 'Padding')
+      row(__('Margen', domain), 'Margin'),
+      row(__('Relleno', domain), 'Padding')
     );
   }
 
