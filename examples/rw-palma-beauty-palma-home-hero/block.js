@@ -66,24 +66,32 @@
   function spacingControls(attrs, setAttributes, prefix, domain) {
     function field(label, side) {
       var key = prefix + side;
-      return el(TextControl, {
-        label: label,
-        value: attrs[key],
-        type: 'number',
-        onChange: function (value) {
-          updateAttr(setAttributes, key, parseNumericInput(value, attrs[key] || 0));
-        }
-      });
+      return el(
+        'div',
+        { style: { minWidth: 0 } },
+        el(TextControl, {
+          label: label,
+          value: attrs[key],
+          type: 'number',
+          onChange: function (value) {
+            updateAttr(setAttributes, key, parseNumericInput(value, attrs[key] || 0));
+          }
+        })
+      );
     }
 
     return el(
       Fragment,
       null,
       el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Margen', domain)),
-      field(__('Superior', domain), 'MarginTop'),
-      field(__('Derecha', domain), 'MarginRight'),
-      field(__('Inferior', domain), 'MarginBottom'),
-      field(__('Izquierda', domain), 'MarginLeft'),
+      el(
+        'div',
+        { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' } },
+        field(__('Superior', domain), 'MarginTop'),
+        field(__('Derecha', domain), 'MarginRight'),
+        field(__('Inferior', domain), 'MarginBottom'),
+        field(__('Izquierda', domain), 'MarginLeft')
+      ),
       el(SelectControl, {
         label: __('Unidad de margen', domain),
         value: attrs[prefix + 'MarginUnit'],
@@ -93,10 +101,14 @@
         }
       }),
       el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Relleno', domain)),
-      field(__('Superior', domain), 'PaddingTop'),
-      field(__('Derecha', domain), 'PaddingRight'),
-      field(__('Inferior', domain), 'PaddingBottom'),
-      field(__('Izquierda', domain), 'PaddingLeft'),
+      el(
+        'div',
+        { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' } },
+        field(__('Superior', domain), 'PaddingTop'),
+        field(__('Derecha', domain), 'PaddingRight'),
+        field(__('Inferior', domain), 'PaddingBottom'),
+        field(__('Izquierda', domain), 'PaddingLeft')
+      ),
       el(SelectControl, {
         label: __('Unidad de relleno', domain),
         value: attrs[prefix + 'PaddingUnit'],
