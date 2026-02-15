@@ -64,19 +64,29 @@
   }
 
   function spacingControls(attrs, setAttributes, prefix, domain) {
-    function field(label, side) {
-      var key = prefix + side;
+    function sideInput(label, placeholder, sideKey, linked, allSideKeys) {
+      var key = prefix + sideKey;
       return el(
         'div',
         { style: { minWidth: 0 } },
         el(TextControl, {
           label: label,
           hideLabelFromVision: true,
-          placeholder: '',
+          placeholder: placeholder,
           value: attrs[key],
           type: 'number',
           onChange: function (value) {
-            updateAttr(setAttributes, key, parseNumericInput(value, attrs[key] || 0));
+            var numeric = parseNumericInput(value, attrs[key] || 0);
+            if (!linked) {
+              updateAttr(setAttributes, key, numeric);
+              return;
+            }
+
+            var update = {};
+            allSideKeys.forEach(function (side) {
+              update[prefix + side] = numeric;
+            });
+            setAttributes(update);
           }
         })
       );
@@ -84,35 +94,61 @@
 
     function row(title, type) {
       var unitKey = prefix + type + 'Unit';
+      var linkedKey = prefix + type + 'Linked';
       var sidePrefix = type;
+      var sideKeys = [
+        sidePrefix + 'Top',
+        sidePrefix + 'Right',
+        sidePrefix + 'Bottom',
+        sidePrefix + 'Left'
+      ];
+      var isLinked = typeof attrs[linkedKey] === 'boolean' ? attrs[linkedKey] : true;
+
       return el(
         'div',
         {
           style: {
             display: 'grid',
-            gridTemplateColumns: '72px repeat(4, minmax(0, 1fr)) 86px',
+            gridTemplateColumns: '72px repeat(4, minmax(0, 1fr)) auto auto',
             gap: '8px',
             alignItems: 'center',
             marginBottom: '8px'
           }
         },
         el('div', { style: { fontWeight: 600, opacity: 0.9 } }, title),
-        field(__('Superior', domain), sidePrefix + 'Top'),
-        field(__('Derecha', domain), sidePrefix + 'Right'),
-        field(__('Inferior', domain), sidePrefix + 'Bottom'),
-        field(__('Izquierda', domain), sidePrefix + 'Left'),
+        sideInput(__('Superior', domain), 'T', sidePrefix + 'Top', isLinked, sideKeys),
+        sideInput(__('Derecha', domain), 'R', sidePrefix + 'Right', isLinked, sideKeys),
+        sideInput(__('Inferior', domain), 'B', sidePrefix + 'Bottom', isLinked, sideKeys),
+        sideInput(__('Izquierda', domain), 'L', sidePrefix + 'Left', isLinked, sideKeys),
         el(
           'div',
-          { style: { minWidth: 0 } },
-          el(SelectControl, {
-            label: type === 'Margin' ? __('Unidad de margen', domain) : __('Unidad de relleno', domain),
-            hideLabelFromVision: true,
-            value: attrs[unitKey],
-            options: SPACING_UNITS,
-            onChange: function (value) {
-              updateAttr(setAttributes, unitKey, value || 'px');
-            }
+          { style: { display: 'flex', gap: '4px', flexWrap: 'wrap' } },
+          SPACING_UNITS.map(function (unit) {
+            return el(
+              Button,
+              {
+                key: unit.value,
+                isSmall: true,
+                variant: attrs[unitKey] === unit.value ? 'primary' : 'secondary',
+                onClick: function () {
+                  updateAttr(setAttributes, unitKey, unit.value);
+                }
+              },
+              unit.label
+            );
           })
+        ),
+        el(
+          Button,
+          {
+            isSmall: true,
+            variant: isLinked ? 'primary' : 'secondary',
+            onClick: function () {
+              updateAttr(setAttributes, linkedKey, !isLinked);
+            },
+            title: isLinked ? __('Desvincular lados', domain) : __('Vincular lados', domain)
+          },
+          isLinked ? __('Vinculado', domain) : __('Libre', domain)
         )
       );
     }
