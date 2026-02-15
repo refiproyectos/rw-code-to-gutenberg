@@ -109,7 +109,7 @@
         {
           style: {
             display: 'grid',
-            gridTemplateColumns: '72px repeat(4, minmax(0, 1fr)) auto auto',
+            gridTemplateColumns: '72px repeat(4, minmax(0, 1fr)) 86px auto',
             gap: '8px',
             alignItems: 'center',
             marginBottom: '8px'
@@ -122,20 +122,15 @@
         sideInput(__('Izquierda', domain), 'L', sidePrefix + 'Left', isLinked, sideKeys),
         el(
           'div',
-          { style: { display: 'flex', gap: '4px', flexWrap: 'wrap' } },
-          SPACING_UNITS.map(function (unit) {
-            return el(
-              Button,
-              {
-                key: unit.value,
-                isSmall: true,
-                variant: attrs[unitKey] === unit.value ? 'primary' : 'secondary',
-                onClick: function () {
-                  updateAttr(setAttributes, unitKey, unit.value);
-                }
-              },
-              unit.label
-            );
+          { style: { minWidth: 0 } },
+          el(SelectControl, {
+            label: type === 'Margin' ? __('Unidad de margen', domain) : __('Unidad de relleno', domain),
+            hideLabelFromVision: true,
+            value: attrs[unitKey],
+            options: SPACING_UNITS,
+            onChange: function (value) {
+              updateAttr(setAttributes, unitKey, value || 'px');
+            }
           })
         ),
         el(
