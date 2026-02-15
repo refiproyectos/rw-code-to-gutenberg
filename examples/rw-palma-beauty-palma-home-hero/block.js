@@ -64,13 +64,15 @@
   }
 
   function spacingControls(attrs, setAttributes, prefix, domain) {
-    function field(label, side) {
+    function field(label, symbol, side) {
       var key = prefix + side;
       return el(
         'div',
         { style: { minWidth: 0 } },
         el(TextControl, {
           label: label,
+          hideLabelFromVision: true,
+          placeholder: symbol,
           value: attrs[key],
           type: 'number',
           onChange: function (value) {
@@ -80,43 +82,46 @@
       );
     }
 
+    function row(symbol, type) {
+      var unitKey = prefix + type + 'Unit';
+      var sidePrefix = type;
+      return el(
+        'div',
+        {
+          style: {
+            display: 'grid',
+            gridTemplateColumns: '24px repeat(4, minmax(0, 1fr)) 86px',
+            gap: '8px',
+            alignItems: 'center',
+            marginBottom: '8px'
+          }
+        },
+        el('div', { style: { fontWeight: 700, textAlign: 'center', opacity: 0.75 } }, symbol),
+        field(__('Superior', domain), '↑', sidePrefix + 'Top'),
+        field(__('Derecha', domain), '→', sidePrefix + 'Right'),
+        field(__('Inferior', domain), '↓', sidePrefix + 'Bottom'),
+        field(__('Izquierda', domain), '←', sidePrefix + 'Left'),
+        el(
+          'div',
+          { style: { minWidth: 0 } },
+          el(SelectControl, {
+            label: type === 'Margin' ? __('Unidad de margen', domain) : __('Unidad de relleno', domain),
+            hideLabelFromVision: true,
+            value: attrs[unitKey],
+            options: SPACING_UNITS,
+            onChange: function (value) {
+              updateAttr(setAttributes, unitKey, value || 'px');
+            }
+          })
+        )
+      );
+    }
+
     return el(
       Fragment,
       null,
-      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Margen', domain)),
-      el(
-        'div',
-        { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' } },
-        field(__('Superior', domain), 'MarginTop'),
-        field(__('Derecha', domain), 'MarginRight'),
-        field(__('Inferior', domain), 'MarginBottom'),
-        field(__('Izquierda', domain), 'MarginLeft')
-      ),
-      el(SelectControl, {
-        label: __('Unidad de margen', domain),
-        value: attrs[prefix + 'MarginUnit'],
-        options: SPACING_UNITS,
-        onChange: function (value) {
-          updateAttr(setAttributes, prefix + 'MarginUnit', value || 'px');
-        }
-      }),
-      el('p', { style: { margin: '16px 0 8px', fontWeight: 600 } }, __('Relleno', domain)),
-      el(
-        'div',
-        { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' } },
-        field(__('Superior', domain), 'PaddingTop'),
-        field(__('Derecha', domain), 'PaddingRight'),
-        field(__('Inferior', domain), 'PaddingBottom'),
-        field(__('Izquierda', domain), 'PaddingLeft')
-      ),
-      el(SelectControl, {
-        label: __('Unidad de relleno', domain),
-        value: attrs[prefix + 'PaddingUnit'],
-        options: SPACING_UNITS,
-        onChange: function (value) {
-          updateAttr(setAttributes, prefix + 'PaddingUnit', value || 'px');
-        }
-      })
+      row('M', 'Margin'),
+      row('P', 'Padding')
     );
   }
 
