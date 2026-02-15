@@ -18,7 +18,7 @@
   var ToggleControl = components.ToggleControl;
   var Button = components.Button;
   var BaseControl = components.BaseControl;
-  var ColorPalette = components.ColorPalette;
+  var ColorPicker = components.ColorPicker;
 
   var FONT_OPTIONS = [
     { label: 'Manrope', value: '"Manrope", sans-serif' },
@@ -129,6 +129,24 @@
     return value ? value : undefined;
   }
 
+  function colorFromPicker(color) {
+    if (!color) {
+      return '';
+    }
+    if (typeof color === 'string') {
+      return color;
+    }
+    if (color.rgb) {
+      var rgb = color.rgb;
+      if (typeof rgb.a === 'number' && rgb.a < 1) {
+        var alpha = Math.round(rgb.a * 100) / 100;
+        return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + alpha + ')';
+      }
+      return color.hex || 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+    }
+    return color.hex || '';
+  }
+
   function linkTargetAttrs(isNewTab) {
     if (!isNewTab) {
       return {};
@@ -145,6 +163,27 @@
       var attrs = props.attributes;
       var setAttributes = props.setAttributes;
       var domain = 'rw-palma-beauty-palma-home-hero';
+
+      function colorControl(label, key, fallback) {
+        var selected = attrs[key] === 'transparent' ? 'rgba(0,0,0,0)' : attrs[key];
+        function onPick(color) {
+          var value = colorFromPicker(color) || fallback;
+          var update = {};
+          update[key] = value;
+          setAttributes(update);
+        }
+
+        return el(
+          BaseControl,
+          { label: label },
+          el(ColorPicker, {
+            color: selected || fallback,
+            enableAlpha: true,
+            onChange: onPick,
+            onChangeComplete: onPick
+          })
+        );
+      }
 
       var blockProps = useBlockProps({
         className: 'rw-palma-hero',
@@ -309,21 +348,8 @@
                 setAttributes({ eyebrowFontSize: value || 12 });
               }
             }),
-            el(BaseControl, { label: __('Color de texto de etiqueta superior', domain) },
-              el(ColorPalette, {
-                value: attrs.eyebrowColor,
-                onChange: function (value) {
-                  setAttributes({ eyebrowColor: value || '#ffffff' });
-                }
-              })
-            ),
-            el(TextControl, {
-              label: __('Color de fondo de etiqueta superior', domain),
-              value: attrs.eyebrowBackgroundColor,
-              onChange: function (value) {
-                setAttributes({ eyebrowBackgroundColor: value || 'rgba(255,255,255,0.1)' });
-              }
-            }),
+            colorControl(__('Color de texto de etiqueta superior', domain), 'eyebrowColor', '#ffffff'),
+            colorControl(__('Color de fondo de etiqueta superior', domain), 'eyebrowBackgroundColor', 'rgba(255,255,255,0.1)'),
             spacingControls(attrs, setAttributes, 'eyebrow', domain)
           ),
 
@@ -356,14 +382,7 @@
                 setAttributes({ titleFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(BaseControl, { label: __('Color del título', domain) },
-              el(ColorPalette, {
-                value: attrs.titleColor,
-                onChange: function (value) {
-                  setAttributes({ titleColor: value || '#ffffff' });
-                }
-              })
-            ),
+            colorControl(__('Color del título', domain), 'titleColor', '#ffffff'),
             spacingControls(attrs, setAttributes, 'title', domain)
           ),
 
@@ -387,13 +406,7 @@
                 setAttributes({ descriptionFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(TextControl, {
-              label: __('Color de la descripción', domain),
-              value: attrs.descriptionColor,
-              onChange: function (value) {
-                setAttributes({ descriptionColor: value || 'rgba(255,255,255,0.92)' });
-              }
-            }),
+            colorControl(__('Color de la descripción', domain), 'descriptionColor', 'rgba(255,255,255,0.92)'),
             spacingControls(attrs, setAttributes, 'description', domain)
           ),
 
@@ -449,29 +462,9 @@
                 setAttributes({ primaryFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(BaseControl, { label: __('Color de fondo', domain) },
-              el(ColorPalette, {
-                value: attrs.primaryBgColor,
-                onChange: function (value) {
-                  setAttributes({ primaryBgColor: value || '#6e30e8' });
-                }
-              })
-            ),
-            el(BaseControl, { label: __('Color de texto', domain) },
-              el(ColorPalette, {
-                value: attrs.primaryTextColor,
-                onChange: function (value) {
-                  setAttributes({ primaryTextColor: value || '#ffffff' });
-                }
-              })
-            ),
-            el(TextControl, {
-              label: __('Color de borde primario', domain),
-              value: attrs.primaryBorderColor,
-              onChange: function (value) {
-                setAttributes({ primaryBorderColor: value || 'transparent' });
-              }
-            }),
+            colorControl(__('Color de fondo', domain), 'primaryBgColor', '#6e30e8'),
+            colorControl(__('Color de texto', domain), 'primaryTextColor', '#ffffff'),
+            colorControl(__('Color de borde primario', domain), 'primaryBorderColor', 'rgba(0,0,0,0)'),
             spacingControls(attrs, setAttributes, 'primary', domain)
           ),
 
@@ -515,28 +508,9 @@
                 setAttributes({ secondaryFontFamily: value || '"Manrope", sans-serif' });
               }
             }),
-            el(TextControl, {
-              label: __('Color de borde', domain),
-              value: attrs.secondaryBorderColor,
-              onChange: function (value) {
-                setAttributes({ secondaryBorderColor: value || 'rgba(255,255,255,0.35)' });
-              }
-            }),
-            el(BaseControl, { label: __('Color de texto', domain) },
-              el(ColorPalette, {
-                value: attrs.secondaryTextColor,
-                onChange: function (value) {
-                  setAttributes({ secondaryTextColor: value || '#ffffff' });
-                }
-              })
-            ),
-            el(TextControl, {
-              label: __('Color de fondo secundario', domain),
-              value: attrs.secondaryBgColor,
-              onChange: function (value) {
-                setAttributes({ secondaryBgColor: value || 'rgba(255,255,255,0.1)' });
-              }
-            }),
+            colorControl(__('Color de borde', domain), 'secondaryBorderColor', 'rgba(255,255,255,0.35)'),
+            colorControl(__('Color de texto', domain), 'secondaryTextColor', '#ffffff'),
+            colorControl(__('Color de fondo secundario', domain), 'secondaryBgColor', 'rgba(255,255,255,0.1)'),
             spacingControls(attrs, setAttributes, 'secondary', domain)
           )
         ),
