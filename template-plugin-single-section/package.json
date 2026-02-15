@@ -1,0 +1,17 @@
+{
+  "name": "rw-example-home-hero",
+  "version": "0.1.0",
+  "description": "Single-section RW Gutenberg block template",
+  "author": "Refineria",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "format": "wp-scripts format",
+    "make-pot": "wp i18n make-pot . languages/rw-example-home-hero.pot --exclude=node_modules,build,.git"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

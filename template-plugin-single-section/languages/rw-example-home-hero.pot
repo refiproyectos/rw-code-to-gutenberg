@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rw-example-home-hero 0.1.0\n"
+"POT-Creation-Date: 2026-02-15 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rw-example-home-hero\n"
+
+#: rw-example-home-hero.php
+msgid "Refineria"
+msgstr ""
+
+#: src/edit.js
+msgid "Section settings"
+msgstr ""
+
+#: src/edit.js
+msgid "Primary button"
+msgstr ""
+
+#: src/edit.js
+msgid "Secondary button"
+msgstr ""

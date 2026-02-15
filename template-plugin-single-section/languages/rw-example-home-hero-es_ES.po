@@ -1,0 +1,19 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rw-example-home-hero 0.1.0\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Refineria"
+msgstr "Refineria"
+
+msgid "Section settings"
+msgstr "Ajustes de sección"
+
+msgid "Primary button"
+msgstr "Botón primario"
+
+msgid "Secondary button"
+msgstr "Botón secundario"

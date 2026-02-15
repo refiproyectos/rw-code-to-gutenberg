@@ -1,0 +1,77 @@
+.wp-block-refineria-rw-example-home-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: #2f2f2f;
+  background-size: cover;
+  background-position: center;
+  padding: clamp(2rem, 5vw, 4rem);
+
+  .rw-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    pointer-events: none;
+  }
+
+  .rw-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+  }
+
+  .rw-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .rw-hero__title {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 4rem);
+    line-height: 1.05;
+  }
+
+  .rw-hero__description {
+    margin: 1rem 0 0;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    opacity: 0.9;
+  }
+
+  .rw-hero__actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.8rem;
+  }
+
+  .rw-hero__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 190px;
+    padding: 0.8rem 1.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .rw-hero__button--primary {
+    background: #5f2cff;
+    color: #fff;
+  }
+
+  .rw-hero__button--secondary {
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    color: #fff;
+  }
+}

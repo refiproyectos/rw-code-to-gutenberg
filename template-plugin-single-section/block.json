@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "refineria/rw-example-home-hero",
+  "version": "0.1.0",
+  "title": "RW example home hero",
+  "category": "refineria",
+  "icon": "cover-image",
+  "description": "Single-section RW block template.",
+  "textdomain": "rw-example-home-hero",
+  "keywords": ["rw", "hero", "refineria"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "customClassName": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "LUJO & RELAX"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Tu oasis de belleza en Palma"
+    },
+    "description": {
+      "type": "string",
+      "default": "Tratamientos exclusivos diseñados para resaltar tu esencia natural."
+    },
+    "primaryButtonText": {
+      "type": "string",
+      "default": "Ver disponibilidad"
+    },
+    "primaryButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "secondaryButtonText": {
+      "type": "string",
+      "default": "Nuestros servicios"
+    },
+    "secondaryButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 0.45
+    },
+    "minHeight": {
+      "type": "number",
+      "default": 460
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

@@ -139,3 +139,11 @@ El trabajo se considera completo solo si:
 - No generar múltiples bloques por plugin.
 - No diseñar librería completa de bloques todavía.
 - No introducir lógica dinámica PHP salvo petición explícita.
+
+## Plantilla base en este repositorio
+- Carpeta: `template-plugin-single-section/`
+- Incluye un scaffold funcional con:
+  - `block.json`, `src/`, `package.json` y archivo principal PHP.
+  - Categoría de bloques `Refineria`.
+  - Ejemplo de ajustes de sección y controles por elementos.
+  - Estructura i18n con `POT/PO/MO` para `es_ES`, `ca` y `en_US`.
