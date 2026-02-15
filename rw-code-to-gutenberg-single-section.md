@@ -1,103 +1,110 @@
 # RW Code to Gutenberg (Single Section)
 
-## Objetivo
-Convertir una sección concreta (HTML/CSS/JS + captura) en **1 plugin WordPress** que registre **1 bloque Gutenberg** en la categoría **Refineria**.
+## 1) Propósito del sistema
+Convertir **una sección concreta** de código frontend (habitualmente una página completa generada por Google Stitch) en **un plugin WordPress instalable** que registre **un único bloque Gutenberg** en la categoría `Refineria`.
 
-## Alcance (fase actual)
-- 1 plugin = 1 bloque (1 sección).
-- El bloque debe ser usable en producción, mantenible y escalable.
-- Más adelante se ampliará a múltiples bloques por plugin.
+El objetivo no es generar prototipos, sino bloques usables en producción con:
+- Controles suficientes para edición real.
+- Paridad visual razonable editor/frontend.
+- Soporte multilenguaje mantenido.
+- Estructura mantenible y versionada.
 
-## Entrada esperada
-El solicitante debe aportar:
-- Código generado por Google Stitch (HTML, CSS y JS de la sección).
-- Nombre de la web.
-- Nombre de la sección.
-- Captura de referencia visual.
+---
 
-## Salida obligatoria
-Entregar un plugin instalable que incluya:
-- Registro del bloque en Gutenberg.
-- Bloque visible dentro de la categoría `Refineria`.
-- Ajustes de la sección y ajustes por elemento interno.
-- Soporte i18n/multilenguaje con archivos de idioma mantenidos.
-- ZIP instalable + carpeta fuente.
+## 2) Alcance actual (vigente)
+- 1 plugin = 1 bloque = 1 sección.
+- El input puede venir como **HTML de página completa**; hay que **identificar y extraer** la sección pedida.
+- Entrega en local + versionado en GitHub.
+- Idiomas base obligatorios: `es_ES`, `ca`, `en_US`.
 
-## Convenciones de naming
-- Nombre visible del bloque: `RW nombredelaweb sección`.
-- Namespace del bloque: `refineria`.
-- Slug técnico del bloque: `refineria/rw-{web}-{seccion}`.
-  - Normalizar a minúsculas.
-  - Sustituir espacios por guiones.
-  - Evitar caracteres especiales.
+Fuera de alcance por ahora:
+- Múltiples bloques por plugin.
+- Lógica dinámica PHP (salvo solicitud explícita).
+- Librería completa de bloques en un único plugin.
 
-## Stack técnico por defecto
-- `block.json` como fuente de verdad del bloque.
-- `@wordpress/scripts` para build.
-- Editor en React/JSX.
-- Bloque `static` por defecto (usar dinámico solo cuando se solicite explícitamente).
+---
 
-## Requisitos funcionales del bloque
-### 1) Registro y descubribilidad
-- Registrar el bloque correctamente con APIs oficiales de WordPress.
-- Asegurar que aparece en la categoría `Refineria`.
+## 3) Convenciones de naming
+### 3.1 Nombre visible
+Formato obligatorio:
+- `RW nombredelaweb sección`
 
-### 2) Ajustes de sección (mínimo)
-- Fondo (imagen/color/overlay cuando aplique).
-- Espaciados principales.
-- Ancho/alineación.
-- Clases extra y anchor soportadas por Gutenberg.
+Ejemplo real:
+- `RW Palma Beauty Palma Home Hero`
 
-### 3) Ajustes por elemento interno (mínimo)
-Aplicar paneles de control específicos, como mínimo, para:
-- Título.
-- Subtítulo.
-- Texto descriptivo.
-- Botón primario.
-- Botón secundario.
-- Medios relevantes (imagen de fondo o principal).
+### 3.2 Slug técnico
+Formato obligatorio:
+- `refineria/rw-{web}-{seccion}`
 
-Cada elemento debe permitir editar contenido y opciones de estilo que no rompan la estructura base.
+Reglas:
+- minúsculas
+- espacios -> guiones
+- sin caracteres especiales
 
-### 4) Integración frontend/editor
-- Mantener paridad visual razonable entre editor y frontend.
-- Separar estilos de editor y frontend cuando corresponda.
-- Cargar JS frontend solo si el bloque lo necesita.
+Ejemplo real:
+- `refineria/rw-palma-beauty-palma-home-hero`
 
-## Internacionalización (obligatorio)
-### Idiomas por defecto
-- Español
-- Catalán
-- Inglés
+### 3.3 Textdomain
+Debe coincidir con el slug de plugin:
+- `rw-{web}-{seccion}`
 
-### Política i18n
-- Todo string visible debe ser traducible.
-- Definir y usar un único `textdomain` del plugin.
-- Mantener siempre actualizados los archivos de idioma con cada cambio de textos.
+Ejemplo real:
+- `rw-palma-beauty-palma-home-hero`
 
-### Archivos mínimos de idiomas
-En `languages/` mantener:
-- Archivo plantilla `.pot`.
-- Traducciones para español (`es_ES`).
-- Traducciones para catalán (`ca`).
-- Traducciones para inglés (`en_US`).
+---
 
-Se espera mantener pares de archivos de traducción compilados cuando aplique (`.po/.mo`) y regenerar la plantilla cuando cambien cadenas.
+## 4) Entrada esperada
+El usuario puede pasar:
+1. Nombre de la web.
+2. Nombre de la sección.
+3. Código Stitch (a veces documento HTML completo).
+4. Captura de la sección objetivo.
 
-## Estructura recomendada del plugin
+### 4.1 Regla de extracción cuando viene página completa
+Si Stitch entrega una página completa:
+1. Detectar el comentario o bloque semántico de sección (ej.: `<!-- Hero Section -->`).
+2. Extraer únicamente el fragmento relevante.
+3. Ignorar cabecera global, footer y secciones no solicitadas.
+4. Mantener contenido textual y estructura visual de la sección target.
 
+---
+
+## 5) Salida obligatoria
+Generar plugin instalable en `wp-content/plugins/` con:
+- Registro correcto del bloque.
+- Categoría `Refineria` visible en inserter.
+- Controles de sección y de elementos.
+- i18n completo (POT/PO/MO + JSON para JS si aplica).
+- ZIP instalable (si se solicita entrega directa).
+
+---
+
+## 6) Stack y estrategia técnica
+### 6.1 Estrategia actual validada
+Para la fase de iteración rápida del bloque real:
+- `block.json` + `block.js` (sin pipeline de build obligatorio)
+- `style.css` + `editor.css`
+- archivo principal PHP del plugin
+- `block.asset.php` manual
+
+### 6.2 Estrategia recomendada de plantilla
+Para repositorio base reusable:
+- `@wordpress/scripts` con `src/` y `build/`
+- misma semántica de controles
+
+Ambas son válidas; la prioridad en pruebas con cliente es velocidad de iteración y estabilidad en WordPress local.
+
+---
+
+## 7) Estructura de plugin (single section)
 ```text
 rw-{web}-{seccion}/
   rw-{web}-{seccion}.php
   block.json
-  package.json
-  src/
-    index.js
-    edit.js
-    save.js
-    style.scss
-    editor.scss
-  build/
+  block.js
+  block.asset.php
+  style.css
+  editor.css
   languages/
     {textdomain}.pot
     {textdomain}-es_ES.po
@@ -106,44 +113,200 @@ rw-{web}-{seccion}/
     {textdomain}-ca.mo
     {textdomain}-en_US.po
     {textdomain}-en_US.mo
-  README.md
+    {textdomain}-<locale>-<hash>.json   (si hay cadenas JS mapeadas)
 ```
 
-Nota: `build/` se genera en compilación y debe estar presente en la entrega instalable.
+---
 
-## Flujo estándar de trabajo
-1. Recibir input (código Stitch + sección + captura).
-2. Definir slug técnico y nombre visible según convención RW.
-3. Crear estructura del plugin.
-4. Implementar bloque y controles:
-   - Ajustes de sección.
-   - Ajustes por elemento.
-5. Implementar estilos editor/frontend.
-6. Integrar i18n en todos los textos.
-7. Generar/actualizar idiomas (`.pot`, `es_ES`, `ca`, `en_US`).
-8. Build del bloque.
-9. Validar en WordPress (editor + frontend).
-10. Entregar carpeta + ZIP.
+## 8) Requisitos funcionales mínimos del bloque
+## 8.1 Bloque y categoría
+- Registrar bloque con `register_block_type`.
+- Si no existe `refineria`, crear categoría vía filtro `block_categories_all`.
 
-## Criterios de aceptación
-El trabajo se considera completo solo si:
-- Existe 1 plugin instalable con 1 bloque funcional.
-- El bloque aparece bajo categoría `Refineria`.
-- El nombre visible sigue el formato `RW nombredelaweb sección`.
-- Hay ajustes de sección y de elementos internos.
-- Todos los textos del bloque son traducibles.
-- Los archivos de idioma requeridos existen y están al día.
-- El bloque se renderiza correctamente en editor y frontend.
+## 8.2 Controles de contenido
+Como mínimo:
+- eyebrow/subtítulo
+- título
+- descripción
+- botón primario (texto + URL)
+- botón secundario (texto + URL)
+- imagen de fondo
 
-## No objetivos (fase actual)
-- No generar múltiples bloques por plugin.
-- No diseñar librería completa de bloques todavía.
-- No introducir lógica dinámica PHP salvo petición explícita.
+## 8.3 Controles de estilo por sección/elemento
+Como mínimo:
+- tamaño de texto donde aplique
+- colores de texto/fondo/borde donde aplique
+- fuente donde aplique
+- margen y padding
 
-## Plantilla base en este repositorio
-- Carpeta: `template-plugin-single-section/`
-- Incluye un scaffold funcional con:
-  - `block.json`, `src/`, `package.json` y archivo principal PHP.
-  - Categoría de bloques `Refineria`.
-  - Ejemplo de ajustes de sección y controles por elementos.
-  - Estructura i18n con `POT/PO/MO` para `es_ES`, `ca` y `en_US`.
+## 8.4 Enlaces internos/externos
+Para cada botón:
+- URL editable
+- toggle `Abrir en nueva pestaña`
+- si activo: `target="_blank"` + `rel="noopener noreferrer"`
+
+---
+
+## 9) Estado real implementado (baseline actual)
+Este baseline ya está probado en el bloque `Palma Home Hero`:
+
+### 9.1 Sección
+- `min-height`
+- opacidad overlay
+- imagen de fondo
+- ancho máximo de contenido
+- alineación de texto
+- fuente de sección
+- border radius
+- spacing avanzado de sección
+
+### 9.2 Elementos
+- Eyebrow: texto, color texto/fondo, tamaño, spacing avanzado.
+- Título: texto, tamaño, ancho máximo, color, fuente, spacing avanzado.
+- Descripción: texto, tamaño, color, fuente, spacing avanzado.
+- Botón primario: texto, URL, `_blank`, colores, tamaño, fuente, spacing avanzado.
+- Botón secundario: texto, URL, `_blank`, colores, tamaño, fuente, spacing avanzado.
+- Wrapper de botones: margen superior.
+
+### 9.3 Spacing avanzado (mejora aplicada)
+Para cada bloque de spacing se usa:
+- 4 campos: `Top`, `Right`, `Bottom`, `Left`
+- selector de unidad: `px | rem | em | % | vw | vh`
+- composición final en shorthand CSS: `top right bottom left`
+
+### 9.4 UX del panel (mejora aplicada)
+- Los 4 campos de margin en **una sola fila**.
+- Los 4 campos de padding en **una sola fila**.
+- Unidad debajo de cada fila.
+
+---
+
+## 10) Internacionalización (obligatoria)
+## 10.1 Idiomas base
+- Español (`es_ES`)
+- Catalán (`ca`)
+- Inglés (`en_US`)
+
+## 10.2 Política obligatoria
+- Toda etiqueta visible del editor debe estar en un idioma consistente (evitar mezcla ES/EN).
+- Todas las cadenas deben pasar por `__()` con `textdomain` correcto.
+- Regenerar idiomas en cada cambio de labels/cadenas.
+
+## 10.3 Comandos estándar de i18n
+Ejecutar desde raíz del plugin:
+```bash
+wp i18n make-pot . languages/{textdomain}.pot --exclude=node_modules,.git,build
+wp i18n update-po languages/{textdomain}.pot languages
+wp i18n make-mo languages
+wp i18n make-json languages --no-purge
+```
+
+Nota:
+- `make-json` puede devolver 0 archivos nuevos si no hay mapeo JS pendiente.
+
+---
+
+## 11) Flujo operativo recomendado (paso a paso)
+1. Recibir input (web, sección, HTML/CSS/JS, captura).
+2. Confirmar sección objetivo si llega página completa.
+3. Crear plugin con naming RW.
+4. Implementar bloque base y render.
+5. Igualar diseño visual principal con captura.
+6. Añadir controles de contenido.
+7. Añadir controles de estilo por elemento.
+8. Añadir controles de spacing avanzado (4 lados + unidad).
+9. Añadir controles de enlaces con `_blank`.
+10. Revisar consistencia de idioma en labels del editor.
+11. Regenerar i18n completo.
+12. Validar sintaxis y funcionamiento.
+13. Probar editor + frontend.
+14. Empaquetar ZIP si aplica.
+15. Versionar y subir cambios a GitHub.
+
+---
+
+## 12) Validación técnica mínima
+## 12.1 Validación de archivos
+```bash
+php -l rw-{web}-{seccion}.php
+node --check block.js
+```
+
+## 12.2 Verificación de errores
+- Revisar `wp-content/debug.log` antes y después.
+- No debe haber fatal errors, parse errors ni warnings de registro de bloque.
+
+## 12.3 Verificación funcional
+- El bloque aparece en `Refineria`.
+- Inserción correcta en editor.
+- Guardado sin invalidación de bloque.
+- Render frontend correcto.
+- Ajustes principales responden.
+- Enlaces respetan toggle `_blank`.
+
+---
+
+## 13) Lecciones aprendidas / riesgos conocidos
+1. **No reemplazar texto técnico interno al traducir**
+   - No tocar keys de atributos (`MarginRight`, `PaddingLeft`, etc.).
+   - Traducir solo labels visibles.
+
+2. **Evitar mezcla de idiomas en UI del editor**
+   - Elegir idioma de UI base por proyecto (actualmente español).
+
+3. **Paridad editor/frontend**
+   - Evitar `clamp(...vw...)` cuando se necesite coincidencia 1:1 en tamaño entre editor y front.
+   - Usar `px` directo en esos casos.
+
+4. **Orden de mejoras**
+   - Primero fidelidad visual global.
+   - Luego granularidad de controles.
+   - Luego ergonomía de paneles (grid de campos).
+
+---
+
+## 14) Criterios de aceptación (definición de terminado)
+Se considera terminado cuando:
+- Existe plugin instalable con 1 bloque funcional.
+- Bloque visible en categoría `Refineria`.
+- Naming cumple convención RW.
+- Sección extraída correctamente del código fuente total.
+- Controles de contenido y estilo activos.
+- Spacing en 4 lados + unidad en sección y elementos.
+- Enlaces con opción `_blank` por botón.
+- i18n actualizado (`POT/PO/MO` y JSON cuando corresponda).
+- Sin errores en `debug.log` relacionados con el bloque.
+- Cambios versionados y subidos a GitHub.
+
+---
+
+## 15) Git y versionado (obligatorio en este proyecto)
+Regla operativa: **cada cambio relevante** debe terminar con:
+1. `git add`
+2. `git commit`
+3. `git push`
+
+Repositorio principal de metodología:
+- `https://github.com/refiproyectos/rw-code-to-gutenberg`
+
+Ruta de ejemplo versionada del bloque real:
+- `examples/rw-palma-beauty-palma-home-hero/`
+
+---
+
+## 16) Próximas mejoras sugeridas
+1. Rel de enlaces configurable (`nofollow`, `sponsored`, `ugc`).
+2. Icono opcional por botón (posición izquierda/derecha).
+3. Overlay avanzado con gradiente configurable (2 colores + ángulo).
+4. Tipografía responsive por breakpoint (móvil/tablet/desktop).
+5. Tokens de diseño reutilizables por preset.
+
+---
+
+## 17) Plantillas disponibles en este repo
+- `template-plugin-single-section/`:
+  plantilla base de plugin single-block.
+- `examples/rw-palma-beauty-palma-home-hero/`:
+  implementación real iterada con mejoras avanzadas.
+
+Este documento debe mantenerse actualizado al final de cada iteración importante.
