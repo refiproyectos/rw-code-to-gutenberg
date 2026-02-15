@@ -171,7 +171,7 @@ Este baseline ya está probado en el bloque `Palma Home Hero`:
 ### 9.3 Spacing avanzado (mejora aplicada)
 Para cada bloque de spacing se usa:
 - 4 campos: `Top`, `Right`, `Bottom`, `Left`
-- selector de unidad: `px | rem | em | % | vw | vh` en la misma fila
+- selector de unidad (`select` compacto): `px | rem | em | % | vw | vh` en la misma fila
 - modo de lados `Vinculado` / `Libre` (estilo Elementor):
   - `Vinculado`: cambiar un lado actualiza los 4
   - `Libre`: cada lado se edita de forma independiente
@@ -180,9 +180,9 @@ Para cada bloque de spacing se usa:
 ### 9.4 UX del panel (mejora aplicada)
 - Los 4 campos de margin en **una sola fila**.
 - Los 4 campos de padding en **una sola fila**.
-- Formato compacto: `Margen [T] [R] [B] [L] [unidad] [Vinculado/Libre]`.
-- Formato compacto: `Relleno [T] [R] [B] [L] [unidad] [Vinculado/Libre]`.
-- Botones de unidad inline (tipo Elementor) en lugar de select clásico.
+- Formato compacto: `Margen [T] [R] [B] [L] [select unidad] [Vinculado/Libre]`.
+- Formato compacto: `Relleno [T] [R] [B] [L] [select unidad] [Vinculado/Libre]`.
+- La unidad se renderiza con `SelectControl` para evitar roturas de layout en panel estrecho.
 - Selectores de color visuales (`ColorPicker`) en todos los campos de color.
 
 ---
