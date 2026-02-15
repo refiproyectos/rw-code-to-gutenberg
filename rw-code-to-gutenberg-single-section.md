@@ -135,7 +135,7 @@ Como mínimo:
 ## 8.3 Controles de estilo por sección/elemento
 Como mínimo:
 - tamaño de texto donde aplique
-- colores de texto/fondo/borde donde aplique
+- colores de texto/fondo/borde con selector visual de color donde aplique
 - fuente donde aplique
 - margen y padding
 
@@ -171,13 +171,19 @@ Este baseline ya está probado en el bloque `Palma Home Hero`:
 ### 9.3 Spacing avanzado (mejora aplicada)
 Para cada bloque de spacing se usa:
 - 4 campos: `Top`, `Right`, `Bottom`, `Left`
-- selector de unidad: `px | rem | em | % | vw | vh`
+- selector de unidad: `px | rem | em | % | vw | vh` en la misma fila
+- modo de lados `Vinculado` / `Libre` (estilo Elementor):
+  - `Vinculado`: cambiar un lado actualiza los 4
+  - `Libre`: cada lado se edita de forma independiente
 - composición final en shorthand CSS: `top right bottom left`
 
 ### 9.4 UX del panel (mejora aplicada)
 - Los 4 campos de margin en **una sola fila**.
 - Los 4 campos de padding en **una sola fila**.
-- Unidad debajo de cada fila.
+- Formato compacto: `Margen [T] [R] [B] [L] [unidad] [Vinculado/Libre]`.
+- Formato compacto: `Relleno [T] [R] [B] [L] [unidad] [Vinculado/Libre]`.
+- Botones de unidad inline (tipo Elementor) en lugar de select clásico.
+- Selectores de color visuales (`ColorPicker`) en todos los campos de color.
 
 ---
 
@@ -261,7 +267,7 @@ node --check block.js
 4. **Orden de mejoras**
    - Primero fidelidad visual global.
    - Luego granularidad de controles.
-   - Luego ergonomía de paneles (grid de campos).
+   - Luego ergonomía de paneles (controles compactos tipo Elementor).
 
 ---
 
@@ -272,7 +278,8 @@ Se considera terminado cuando:
 - Naming cumple convención RW.
 - Sección extraída correctamente del código fuente total.
 - Controles de contenido y estilo activos.
-- Spacing en 4 lados + unidad en sección y elementos.
+- Spacing tipo Elementor en sección y elementos: 4 lados + unidad + modo vinculado/libre.
+- Selectores visuales de color en todos los campos de color.
 - Enlaces con opción `_blank` por botón.
 - i18n actualizado (`POT/PO/MO` y JSON cuando corresponda).
 - Sin errores en `debug.log` relacionados con el bloque.
